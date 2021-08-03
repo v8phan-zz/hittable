@@ -1,13 +1,14 @@
 import './App.css';
 import axios from 'axios';
 import React from 'react';
+import statecodes from './statecodes.js';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       city: '',
-      statestate: '',
+      stateinput: '',
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -18,20 +19,29 @@ class App extends React.Component {
   }
 
   handleSubmit(event) {
-    alert('You are in ' + this.state.city +', ' + this.state.statestate);
-    axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${this.state.city}&appid=02d2c0bc0569091f6d80053853dfabd6`)
+    alert('You are in ' + this.state.city +', ' + this.state.stateinput);
+    const statecodeObject = statecodes.find(o => o.State === this.state.stateinput);
+    console.log(statecodeObject.Code);
+    axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${this.state.city},${statecodeObject.Code}&units=imperial&appid=02d2c0bc0569091f6d80053853dfabd6`)
         .then(response => {
-          console.log(response)
+          if (response.data.main.temp < 60) {
+            window.alert("Too cold!")
+          } else if (response.data.wind.speed > 10) {
+            window.alert("Too windy!")
+          } else {
+            window.alert(`It's ${response.data.main.temp} degrees with average winds of ${response.data.wind.speed}mph. Hittable!`)
+          }
+          console.log(response.data)
         })
         .catch(error => {
           window.alert("server not connected?")
           console.log(error)
         })
 
-   // event.preventDefault();
+   event.preventDefault();
   }
   componentDidUpdate() {
-    console.log(this.state.city +', ' + this.state.statestate)
+    console.log(this.state.city +', ' + this.state.stateinput)
   }
 
   render() {
@@ -48,8 +58,8 @@ class App extends React.Component {
       <p>Enter your state:</p>
       <input
         type='text'
-        name='statestate'
-        value={this.state.statestate}
+        name='stateinput'
+        value={this.state.stateinput}
         onChange={this.handleChange}
       />
       <input type='submit' value="Can I hit?"/>
