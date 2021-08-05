@@ -187,12 +187,12 @@ const statecodes = [
   {
     State: "Oregon",
     Abbrev: "Ore.",
-    Code: "OR",
+    Code: "US-OR",
   },
   {
     State: "Pennsylvania",
     Abbrev: "Pa.",
-    Code: "PA",
+    Code: "US-PA",
   },
   {
     State: "Rhode Island",
