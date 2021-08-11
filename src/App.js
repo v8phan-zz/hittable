@@ -4,11 +4,19 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import statecodes from "./statecodes.js";
-import TextField from '@material-ui/core/styles';
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 
 const styles = {
-  input: {
-    background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+  form: {
+    paddingLeft: 20,
+  },
+  button: {
+    marginTop: 20,
+    backgroundColor: "lightgreen",
+    "&:hover": {
+      backgroundColor: "green",
+    },
   },
 };
 
@@ -46,13 +54,13 @@ class App extends React.Component {
           window.alert("Too windy!");
         } else {
           window.alert(
-            `It's ${response.data.main.temp} degrees with average winds of ${response.data.wind.speed}mph. Hittable!`
+            `It's ${response.data.main.temp} degrees with average winds of ${response.data.wind.speed} mph. Hittable!`
           );
         }
         console.log(response.data);
       })
       .catch((error) => {
-        window.alert("server not connected?");
+        window.alert("Did you spell out and capitalize the state name?");
         console.log(error);
       });
 
@@ -66,24 +74,36 @@ class App extends React.Component {
     const { classes } = this.props;
 
     return (
-      <form onSubmit={this.handleSubmit}>
-        <h1>Hello </h1>
+      <form onSubmit={this.handleSubmit} className={classes.form}>
+        <h1>Can I play tennis today? </h1>
         <p>Enter your city:</p>
-        <input
-          className={classes.input}
+        <TextField
+          variant="outlined"
           type="text"
           name="city"
           value={this.state.city}
+          label="City"
           onChange={this.handleChange}
         />
         <p>Enter your state:</p>
-        <input
+        <TextField
+          variant="outlined"
           type="text"
           name="stateinput"
           value={this.state.stateinput}
+          label="State"
+          id="outlined-basic"
           onChange={this.handleChange}
         />
-        <input type="submit" value="Can I hit?" />
+        <br></br>
+        <Button
+          size="large"
+          className={classes.button}
+          type="submit"
+          variant="outlined"
+        >
+          Can I hit?
+        </Button>
       </form>
     );
   }
