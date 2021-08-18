@@ -18,6 +18,10 @@ const styles = {
       backgroundColor: "green",
     },
   },
+  displaymessage: {
+    marginLeft: 20,
+    marginRight: 20,
+  },
 };
 
 class App extends React.Component {
@@ -26,36 +30,77 @@ class App extends React.Component {
     this.state = {
       city: "",
       stateinput: "",
+      stateDisplayMessage: "Hittable?",
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    //this.setState = this.setState.bind(this);
   }
 
   handleChange(evt) {
     this.setState({ [evt.target.name]: evt.target.value });
   }
 
+  componentDidMount() {
+    if ("geolocation" in navigator) {
+      console.log("Available");
+      navigator.geolocation.getCurrentPosition(function(position) {
+        console.log("Latitude is :", position.coords.latitude);
+        console.log("Longitude is :", position.coords.longitude);
+
+        axios
+        .get(
+          `https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=imperial&appid=02d2c0bc0569091f6d80053853dfabd6`
+        )
+        .then((response) => {
+        
+          console.log(response);
+          if (response.data.weather[0].description === "heavy rain") {
+            this.setState({stateDisplayMessage: "Too rainy!"});
+          } else if (response.data.main.temp < 60) {
+            this.setState({stateDisplayMessage: "Too cold!"});
+          } else if (response.data.wind.speed > 10) {
+            this.setState({stateDisplayMessage: "Too windy!"});
+          } else {
+            this.setState({stateDisplayMessage: `It's ${response.data.main.temp} degrees with average winds of ${response.data.wind.speed} mph. Hittable!`});
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      }.bind(this));
+  
+      
+
+    } else {
+      console.log("Not Available");
+    }
+  }
+
+
   handleSubmit(event) {
+
     alert("You are in " + this.state.city + ", " + this.state.stateinput);
+
     const statecodeObject = statecodes.find(
       (o) => o.State === this.state.stateinput
     );
     console.log(statecodeObject.Code);
+
+    
     axios
       .get(
         `https://api.openweathermap.org/data/2.5/weather?q=${this.state.city},${statecodeObject.Code}&units=imperial&appid=02d2c0bc0569091f6d80053853dfabd6`
       )
       .then((response) => {
         if (response.data.weather[0].description === "heavy rain") {
-          window.alert("Too rainy!");
+          this.setState({stateDisplayMessage: "Too rainy!"});
         } else if (response.data.main.temp < 60) {
-          window.alert("Too cold!");
+          this.setState({stateDisplayMessage: "Too cold!"});
         } else if (response.data.wind.speed > 10) {
-          window.alert("Too windy!");
+          this.setState({stateDisplayMessage: "Too windy!"});
         } else {
-          window.alert(
-            `It's ${response.data.main.temp} degrees with average winds of ${response.data.wind.speed} mph. Hittable!`
-          );
+          this.setState({stateDisplayMessage: `It's ${response.data.main.temp} degrees with average winds of ${response.data.wind.speed} mph. Hittable!`});
         }
         console.log(response.data);
       })
@@ -74,6 +119,7 @@ class App extends React.Component {
     const { classes } = this.props;
 
     return (
+      <div>
       <form onSubmit={this.handleSubmit} className={classes.form}>
         <h1>Can I play tennis today? </h1>
         <p>Enter your city:</p>
@@ -105,6 +151,8 @@ class App extends React.Component {
           Can I hit?
         </Button>
       </form>
+      <p className={classes.displaymessage}>{this.state.stateDisplayMessage}</p>
+      </div>
     );
   }
 }
