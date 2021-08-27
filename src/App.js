@@ -14,11 +14,12 @@ const styles = {
     right: 0,
     bottom: 0,
     left: 0,
-    marginTop: 0,
+    padding: 70,
     backgroundColor: "orange",
   },
   form: {
-    paddingLeft: 20,
+    textAlign: "center",
+
   },
   button: {
     marginTop: 20,
@@ -28,8 +29,7 @@ const styles = {
     },
   },
   displaymessage: {
-    marginLeft: 20,
-    marginRight: 20,
+    textAlign: "center",
   },
 };
 
