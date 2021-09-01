@@ -6,6 +6,12 @@ import PropTypes from "prop-types";
 import statecodes from "./statecodes.js";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import {
+  WiDayCloudyGusts,
+  WiDaySunnyOvercast,
+  WiDayShowers,
+  WiDaySnow,
+} from "weather-icons-react";
 
 const styles = {
   bigDiv: {
@@ -19,7 +25,6 @@ const styles = {
   },
   form: {
     textAlign: "center",
-
   },
   button: {
     marginTop: 20,
@@ -124,6 +129,15 @@ class App extends React.Component {
 
   render() {
     const { classes } = this.props;
+    const iconObjectMap = {
+      "Too rainy!" : WiDayShowers,
+      "Too cold!" : WiDaySnow,
+      "Too windy!" : WiDayCloudyGusts,
+      "Hittable!" : WiDaySunnyOvercast,
+    };
+
+    const WeatherIcon = iconObjectMap[this.state.displaymessage]
+
 
     return (
       <div className={classes.bigDiv}>
@@ -161,10 +175,12 @@ class App extends React.Component {
         <p className={classes.displaymessage}>
           {this.state.stateDisplayMessage}
         </p>
+        <WeatherIcon />
       </div>
     );
   }
 }
+
 
 App.propTypes = {
   classes: PropTypes.object.isRequired,
