@@ -129,15 +129,14 @@ class App extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const iconObjectMap = {
-      "Too rainy!" : WiDayShowers,
-      "Too cold!" : WiDaySnow,
-      "Too windy!" : WiDayCloudyGusts,
-      "Hittable!" : WiDaySunnyOvercast,
-    };
+    //   const iconObjectMap = {
+    //     "Too rainy!" : WiDayShowers,
+    //     "Too cold!" : WiDaySnow,
+    //     "Too windy!" : WiDayCloudyGusts,
+    //     "Hittable!" : WiDaySunnyOvercast,
+    //   };
 
-    const WeatherIcon = iconObjectMap[this.state.displaymessage]
-
+    //   const WeatherIcon = iconObjectMap[this.state.stateDisplayMessage]
 
     return (
       <div className={classes.bigDiv}>
@@ -175,12 +174,10 @@ class App extends React.Component {
         <p className={classes.displaymessage}>
           {this.state.stateDisplayMessage}
         </p>
-        <WeatherIcon />
       </div>
     );
   }
 }
-
 
 App.propTypes = {
   classes: PropTypes.object.isRequired,
