@@ -36,7 +36,26 @@ const styles = {
   displaymessage: {
     textAlign: "center",
   },
+  weatherIcon: {
+    display: "block",
+    marginLeft: "auto",
+    marginRight: "auto",
+    width: "10",
+  },
 };
+
+// function getMapValue(map, key) {
+//   return map.get(key) || [];
+// }
+
+// const iconArray = [
+//   {type: "default", icon: WiDaySunnyOvercast},
+//   {type: "windy", icon: WiDayCloudyGusts},
+//   {type: "rainy", icon: WiDayShowers},
+//   {type: "cold", icon: WiDaySnow}
+// ]
+
+//const findIcon = iconArray.find((type) => type === stateDisplayMessage);
 
 class App extends React.Component {
   constructor(props) {
@@ -44,6 +63,7 @@ class App extends React.Component {
     this.state = {
       city: "",
       stateinput: "",
+      iconState: "",
       stateDisplayMessage: "Hittable?",
     };
     this.handleChange = this.handleChange.bind(this);
@@ -52,6 +72,7 @@ class App extends React.Component {
 
   handleChange(evt) {
     this.setState({ [evt.target.name]: evt.target.value });
+  
   }
 
   componentDidMount() {
@@ -79,6 +100,8 @@ class App extends React.Component {
                   stateDisplayMessage: `It's ${response.data.main.temp} degrees with average winds of ${response.data.wind.speed} mph. Hittable!`,
                 });
               }
+              this.setState({ iconState: response.data.weather[0].icon})
+              console.log(this.state.iconState)
             })
             .catch((error) => {
               console.log(error);
@@ -114,6 +137,7 @@ class App extends React.Component {
             stateDisplayMessage: `It's ${response.data.main.temp} degrees with average winds of ${response.data.wind.speed} mph. Hittable!`,
           });
         }
+        this.setState({ iconState: response.data.weather[0].icon})
         console.log(response.data);
       })
       .catch((error) => {
@@ -142,18 +166,18 @@ class App extends React.Component {
       <div className={classes.bigDiv}>
         <form onSubmit={this.handleSubmit} className={classes.form}>
           <h1>Can I play tennis today?</h1>
-          <p>Enter your city:</p>
+          <p>Enter your location:</p>
           <TextField
-            variant="outlined"
+            variant="filled"
             type="text"
             name="city"
             value={this.state.city}
             label="City"
             onChange={this.handleChange}
+            margin="normal"
           />
-          <p>Enter your state:</p>
           <TextField
-            variant="outlined"
+            variant="filled"
             type="text"
             name="stateinput"
             value={this.state.stateinput}
@@ -161,7 +185,6 @@ class App extends React.Component {
             id="outlined-basic"
             onChange={this.handleChange}
           />
-          <br></br>
           <Button
             size="large"
             className={classes.button}
@@ -174,6 +197,11 @@ class App extends React.Component {
         <p className={classes.displaymessage}>
           {this.state.stateDisplayMessage}
         </p>
+        <img 
+        className={classes.weatherIcon}
+        src={`http://openweathermap.org/img/wn/${this.state.iconState}@2x.png`}
+        alt="weather icon"
+        />
       </div>
     );
   }
