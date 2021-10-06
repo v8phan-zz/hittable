@@ -11,8 +11,6 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
 The app will read user location when first opened with [Geolocator](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation) and decide whether or not the weather is suitable for tennis that day.
 User is also able to manually input a city and state.
 
