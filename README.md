@@ -1,5 +1,3 @@
-<!-- PROJECT LOGO -->
-<br />
 <p align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
@@ -26,7 +24,7 @@ User is also able to manually input a city and state.
 
 
 * [React](https://reactjs.org/)
-* [Material UI](hthttps://mui.com/)
+* [Material UI](https://mui.com/)
 * [OpenWeatherMap API](https://openweathermap.org/api)
 
 <!-- CONTACT -->

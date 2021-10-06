@@ -15,32 +15,19 @@ const styles = {
     textAlign: "center",
     alignItems: "center",
     margin: 50,
-    // position: "absolute",
-    // top: 0,
-    // right: 0,
-    // bottom: 0,
-    // left: 0,
-    // padding: 70,
-    // backgroundColor: "orange",
   },
   form: {
     textAlign: "center",
   },
   button: {
-    // marginTop: 20,
-    // backgroundColor: "lightgreen",
-    // "&:hover": {
-    //   backgroundColor: "green",
-    // },
+    marginTop: 20,
+    backgroundColor: "lightgreen",
+    "&:hover": {
+    backgroundColor: "green",
+    },
   },
   displaymessage: {
     textAlign: "center",
-  },
-  weatherIcon: {
-    // display: "block",
-    // marginLeft: "auto",
-    // marginRight: "auto",
-    // width: "10",
   },
 };
 
@@ -179,7 +166,6 @@ class App extends React.Component {
           {this.state.stateDisplayMessage}
         </p>
         <img
-          className={classes.weatherIcon}
           src={`http://openweathermap.org/img/wn/${this.state.iconState}@2x.png`}
           alt="weather icon"
         />
