@@ -6,56 +6,43 @@ import PropTypes from "prop-types";
 import statecodes from "./statecodes.js";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import {
-  WiDayCloudyGusts,
-  WiDaySunnyOvercast,
-  WiDayShowers,
-  WiDaySnow,
-} from "weather-icons-react";
 
 const styles = {
   bigDiv: {
-    position: "absolute",
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
-    padding: 70,
-    backgroundColor: "orange",
+    display: "flex",
+    flexWrap: "wrap",
+    flexDirection: "column",
+    textAlign: "center",
+    alignItems: "center",
+    margin: 50,
+    // position: "absolute",
+    // top: 0,
+    // right: 0,
+    // bottom: 0,
+    // left: 0,
+    // padding: 70,
+    // backgroundColor: "orange",
   },
   form: {
     textAlign: "center",
   },
   button: {
-    marginTop: 20,
-    backgroundColor: "lightgreen",
-    "&:hover": {
-      backgroundColor: "green",
-    },
+    // marginTop: 20,
+    // backgroundColor: "lightgreen",
+    // "&:hover": {
+    //   backgroundColor: "green",
+    // },
   },
   displaymessage: {
     textAlign: "center",
   },
   weatherIcon: {
-    display: "block",
-    marginLeft: "auto",
-    marginRight: "auto",
-    width: "10",
+    // display: "block",
+    // marginLeft: "auto",
+    // marginRight: "auto",
+    // width: "10",
   },
 };
-
-// function getMapValue(map, key) {
-//   return map.get(key) || [];
-// }
-
-// const iconArray = [
-//   {type: "default", icon: WiDaySunnyOvercast},
-//   {type: "windy", icon: WiDayCloudyGusts},
-//   {type: "rainy", icon: WiDayShowers},
-//   {type: "cold", icon: WiDaySnow}
-// ]
-
-//const findIcon = iconArray.find((type) => type === stateDisplayMessage);
 
 class App extends React.Component {
   constructor(props) {
@@ -72,7 +59,6 @@ class App extends React.Component {
 
   handleChange(evt) {
     this.setState({ [evt.target.name]: evt.target.value });
-  
   }
 
   componentDidMount() {
@@ -100,8 +86,8 @@ class App extends React.Component {
                   stateDisplayMessage: `It's ${response.data.main.temp} degrees with average winds of ${response.data.wind.speed} mph. Hittable!`,
                 });
               }
-              this.setState({ iconState: response.data.weather[0].icon})
-              console.log(this.state.iconState)
+              this.setState({ iconState: response.data.weather[0].icon });
+              console.log(this.state.iconState);
             })
             .catch((error) => {
               console.log(error);
@@ -137,7 +123,7 @@ class App extends React.Component {
             stateDisplayMessage: `It's ${response.data.main.temp} degrees with average winds of ${response.data.wind.speed} mph. Hittable!`,
           });
         }
-        this.setState({ iconState: response.data.weather[0].icon})
+        this.setState({ iconState: response.data.weather[0].icon });
         console.log(response.data);
       })
       .catch((error) => {
@@ -153,20 +139,12 @@ class App extends React.Component {
 
   render() {
     const { classes } = this.props;
-    //   const iconObjectMap = {
-    //     "Too rainy!" : WiDayShowers,
-    //     "Too cold!" : WiDaySnow,
-    //     "Too windy!" : WiDayCloudyGusts,
-    //     "Hittable!" : WiDaySunnyOvercast,
-    //   };
-
-    //   const WeatherIcon = iconObjectMap[this.state.stateDisplayMessage]
 
     return (
       <div className={classes.bigDiv}>
+        <h1>Can I play tennis today?</h1>
+        <p>Enter your location:</p>
         <form onSubmit={this.handleSubmit} className={classes.form}>
-          <h1>Can I play tennis today?</h1>
-          <p>Enter your location:</p>
           <TextField
             variant="filled"
             type="text"
@@ -175,6 +153,7 @@ class App extends React.Component {
             label="City"
             onChange={this.handleChange}
             margin="normal"
+            fullWidth="true"
           />
           <TextField
             variant="filled"
@@ -184,6 +163,8 @@ class App extends React.Component {
             label="State"
             id="outlined-basic"
             onChange={this.handleChange}
+            margin="normal"
+            fullWidth="true"
           />
           <Button
             size="large"
@@ -197,10 +178,10 @@ class App extends React.Component {
         <p className={classes.displaymessage}>
           {this.state.stateDisplayMessage}
         </p>
-        <img 
-        className={classes.weatherIcon}
-        src={`http://openweathermap.org/img/wn/${this.state.iconState}@2x.png`}
-        alt="weather icon"
+        <img
+          className={classes.weatherIcon}
+          src={`http://openweathermap.org/img/wn/${this.state.iconState}@2x.png`}
+          alt="weather icon"
         />
       </div>
     );
